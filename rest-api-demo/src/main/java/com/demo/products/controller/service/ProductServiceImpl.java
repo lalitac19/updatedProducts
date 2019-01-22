@@ -1,46 +1,19 @@
 package com.demo.products.controller.service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.demo.products.controller.model.ColorSwatch;
-import com.demo.products.controller.model.Prices;
-import com.demo.products.controller.model.Product;
 import com.demo.products.controller.model.ProductsList;
-
-import org.json.*;
 
 @Service
 public class ProductServiceImpl implements ProductService {
 
-	/*
-	 * @Autowired Products product;
-	 * 
-	 * @Autowired Prices price;
-	 * 
-	 * @Autowired ProductsList productsList;
-	 * 
-	 * @Autowired ColorSwatch colorSwatch;
-	 */
 
 	/*
-	 * @Override public List<Product> getDiscountedProducts() { List <Product>
-	 * discountedProducts = new ArrayList <Product>();
-	 * 
 	 * double priceReduction; for(int x = 0; x <= discountedProducts.size(); x++) {
-	 * if (discountedProducts.) { discountedProducts.add(arg0); } } return
-	 * Collections.sort(product.)); }
-	 * 
-	 */
+	 * if (discountedProducts.) { discountedProducts.add(arg0); } } return Colle
+	 ctions.sort(product.)); }*/
+	
 
 	public ProductsList getDiscountedProducts() {
 		RestTemplate restTemplate = new RestTemplate();
@@ -49,15 +22,7 @@ public class ProductServiceImpl implements ProductService {
 		  ProductsList.class);
 		  
 		System.out.println("sIXE >> "+ myProducts);
-		 // List<Product> employees = myProducts.getProduct();
-		
-		/*
-		 * ResponseEntity<Products> response = restTemplate.exchange(
-		 * "https://jl-nonprod-syst.apigee.net/v1/categories/600001506/products?key=2ALHCAAs6ikGRBoy6eTHA58RaG097Fma",
-		 * HttpMethod.GET, null, new ParameterizedTypeReference<Products>(){}); Products
-		 * products = response.getBody();
-		 */
-		
+	
 		/*
 		 * Products myProducts = getProducts.getForObject(
 		 * "https://jl-nonprod-syst.apigee.net/v1/categories/600001506/products?key=2ALHCAAs6ikGRBoy6eTHA58RaG097Fma",
