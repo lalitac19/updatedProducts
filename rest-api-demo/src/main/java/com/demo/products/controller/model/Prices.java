@@ -47,13 +47,11 @@ public class Prices {
 	public void setNow(Object now) {
 		if(now instanceof String) {
 			this.now = now.toString();
-			//formatPrice(this.now);
 		}else 
 			this.now = "";
 	}
 	
 	public String formatPrice (String now) {
-		System.out.println("now = "+now);
 		String price = "";
 		float nowFloat = Float.valueOf(now);
 		if (nowFloat < 10.00) {
@@ -69,6 +67,4 @@ public class Prices {
 		return "Prices [was=" + was + ", then1=" + then1 + ", then2=" + then2 + ", now=" + now + ", currency="
 				+ currency + "]";
 	} 
-	
-	
 }

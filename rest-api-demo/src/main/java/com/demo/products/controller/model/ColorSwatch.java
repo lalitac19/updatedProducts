@@ -39,7 +39,7 @@ public class ColorSwatch {
 				+ getSkuId() + "]";
 	}
 
-	 public  String colorToHex(String code) { // java String#hashCode
+	 public  String colorToHex(String code) {
 	        int hash = 0;
 	        for (int i = 0; i < code.length(); i++) {
 	            hash = code.charAt(i) + ((hash << 5) - hash);
@@ -49,8 +49,4 @@ public class ColorSwatch {
 	                Integer.toHexString(((hash>>8)&0xFF))+
 	                Integer.toHexString(((hash>>0)&0xFF));
 	    }
-	
-	
-	
-
 }

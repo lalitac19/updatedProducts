@@ -14,7 +14,6 @@ public class Product implements Comparable{
 	private String nowPrice = "";
 	private String priceLabel = "";
 
-	// @JsonProperty(access = Access.WRITE_ONLY)
 	public String getProductId() {
 		return productId;
 	}
@@ -36,7 +35,6 @@ public class Product implements Comparable{
 	}
 
 	public void setColorSwatches(ColorSwatch[] colorSwatches) {
-		
 		this.colorSwatches = colorSwatches;
 	}
 
@@ -71,6 +69,7 @@ public class Product implements Comparable{
 				+ price + "]";
 	}
 
+	
 @Override
 public int compareTo(Object o) {
 

@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import com.demo.products.controller.model.ColorSwatch;
 import com.demo.products.controller.model.Prices;
 import com.demo.products.controller.model.Product;
 import com.demo.products.controller.model.ProductsList;
@@ -29,14 +31,15 @@ public class ProductServiceImpl implements ProductService {
 	private ProductsList getDiscountedProducts(Product[] myProducts, String labelType) {
 		List<Product> productsList = new LinkedList<>();
 		for (Product product : myProducts) {
-			
-			System.out.println(product.getPrice());
 			int discountPercentage = getDiscountPercentage(product.getPrice());
 			if (discountPercentage == 0) {
 				continue;
 			}
 			product.setNowPrice(product.getPrice().formatPrice(product.getPrice().getNow()));
 			product.setPriceLabel(calculatePriceLabel(product.getPrice(), labelType == null? "ShowWasNow": labelType ));
+			if(!product.getColorSwatches().toString().isEmpty()) {
+				setHexColor(product.getColorSwatches());
+			}
 			product.compareTo(product);
 			productsList.add(product);
 		}
@@ -45,6 +48,12 @@ public class ProductServiceImpl implements ProductService {
 		ProductsList result = new ProductsList();
 		result.setProducts(productsList.toArray(new Product[productsList.size()]));
 		return result;
+	}
+	
+	public void setHexColor(ColorSwatch [] colorSwatches) {
+		for(ColorSwatch colors : colorSwatches) {
+			colors.setBasicColor(colors.colorToHex(colors.getBasicColor()));
+		}
 	}
 
 	public String calculatePriceLabel(Prices price, String labelType) {

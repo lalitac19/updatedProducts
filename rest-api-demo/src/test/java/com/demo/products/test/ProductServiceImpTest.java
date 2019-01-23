@@ -3,7 +3,6 @@ package com.demo.products.test;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import com.demo.products.controller.model.Prices;
 import com.demo.products.controller.service.ProductServiceImpl;
 
@@ -57,7 +56,8 @@ public class ProductServiceImpTest {
 		String message1 = "Was: £700, Now: £450";
 		String displayed2 = productServiceImpl.displayWasNowPrice(price2);
 		String displayed1 = productServiceImpl.displayWasNowPrice(price4);
-
+		 Assert.assertEquals(message, displayed2);
+		 Assert.assertEquals(message1, displayed1);
 	}
 	
 	@Test
@@ -71,8 +71,5 @@ public class ProductServiceImpTest {
 		 Assert.assertEquals(message, displayed2);
 		 Assert.assertEquals(message1, displayed1);
 		 Assert.assertEquals(message3, displayed3);
-	  }
-	  
-	 
-
+	}
 }

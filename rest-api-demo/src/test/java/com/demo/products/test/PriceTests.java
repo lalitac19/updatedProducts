@@ -13,27 +13,16 @@ import junit.framework.Assert;
 public class PriceTests {
 	
 	ProductServiceImpl productServiceImpl = new ProductServiceImpl();
-	Prices price1 = new Prices();
 	Prices price2 = new Prices();
-	Prices price3 = new Prices();
 	Prices price4 = new Prices();
 
-	
 @Before
 public void setUp() throws Exception {
-		price1.setNow("45.00");
-		price1.setWas("");
-		
 		price2.setWas("45.00");
 		price2.setThen2("");
 		price2.setThen1("");
 		price2.setNow("20.00");
-		
-		price3.setWas("15.00");
-		price3.setThen1("");
-		price3.setThen2("12.50");
-		price3.setNow("10.00");
-		
+	
 		price4.setNow("9.99");
 		price4.setWas("20.00");
 		price4.setThen1("15.00");
