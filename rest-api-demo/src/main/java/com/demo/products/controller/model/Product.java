@@ -35,6 +35,7 @@ public class Product {
 	public String getNowPrice() {
 		return nowPrice;
 	}
+
 	public void setNowPrice(String nowPrice) {
 		this.nowPrice = nowPrice;
 	}

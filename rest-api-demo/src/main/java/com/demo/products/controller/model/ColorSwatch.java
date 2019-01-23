@@ -1,8 +1,5 @@
 package com.demo.products.controller.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ColorSwatch {
@@ -56,6 +53,8 @@ public class ColorSwatch {
 	        Integer.toHexString(((i>>8)&0xFF))+
 	        Integer.toHexString((i&0xFF));
 	}
+	
+	
 	
 
 }

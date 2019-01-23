@@ -1,50 +1,56 @@
 package com.demo.products.controller.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
+import com.demo.products.controller.model.Prices;
+import com.demo.products.controller.model.Product;
 import com.demo.products.controller.model.ProductsList;
 
 @Service
 public class ProductServiceImpl implements ProductService {
 
+	@Value("${url}")
+	private String url;
 
-	/*
-	 * double priceReduction; for(int x = 0; x <= discountedProducts.size(); x++) {
-	 * if (discountedProducts.) { discountedProducts.add(arg0); } } return Colle
-	 ctions.sort(product.)); }*/
-	
-
-	public ProductsList getDiscountedProducts() {
+	public ProductsList getProducts(String labelType) {
 		RestTemplate restTemplate = new RestTemplate();
-		ProductsList myProducts = restTemplate.getForObject(
-		  "https://jl-nonprod-syst.apigee.net/v1/categories/600001506/products?key=2ALHCAAs6ikGRBoy6eTHA58RaG097Fma",
-		  ProductsList.class);
-		  
-		System.out.println("sIXE >> "+ myProducts);
-	
-		/*
-		 * Products myProducts = getProducts.getForObject(
-		 * "https://jl-nonprod-syst.apigee.net/v1/categories/600001506/products?key=2ALHCAAs6ikGRBoy6eTHA58RaG097Fma",
-		 * Products.class);
-		 * 
-		 * List<Product> employees = myProducts.getProduct();
-		 */
-		
-		
-		
-		// productsList.setProducts(products);
-		/*
-		 * for (int i = 0; i < myProducts.getProducts().length; i++) { JSONObject
-		 * objects = myProducts.getJSONObject(i); Iterator key = objects.keys(); while
-		 * (key.hasNext()) { String k = key.next().toString(); if(k.equals("Name")) {
-		 * if(objects.getString(k).equals("Camera")) { System.out.println("\nKey : " + k
-		 * + "\nName : " + objects.getString(k) + ", \nValue : " +
-		 * objects.getInt("Value")); } } } }
-		 */
-
-		return myProducts;
+		ProductsList myProducts = restTemplate.getForObject(url, ProductsList.class);
+		return getDiscountedProducts(myProducts.getProducts(), labelType);
 	}
+
+	private ProductsList getDiscountedProducts(Product[] myProducts, String labelType) {
+		// discountPercentage;
+		for (Product products : myProducts) {
+			getDiscountPercentage(products.getPrice());
+			if(!products.getPrice().getWas().equals("")) {
+				
+			}
+
+		}
+		return null;
+	}
+
+	public int getDiscountPercentage(Prices prices) {
+		int discount = 0;
+		if (!prices.getWas().equals("") && !prices.getNow().equals("")) {
+			float nowFloat = Float.valueOf(prices.getNow());
+			float wasFloat = Float.valueOf(prices.getWas());
+			discount = (int) (((wasFloat - nowFloat)/wasFloat)*100);
+		}
+		return discount;
+	}
+
+	// productsList.setProducts(products);
+	/*
+	 * for (int i = 0; i < myProducts.getProducts().length; i++) { JSONObject
+	 * objects = myProducts.getJSONObject(i); Iterator key = objects.keys(); while
+	 * (key.hasNext()) { String k = key.next().toString(); if(k.equals("Name")) {
+	 * if(objects.getString(k).equals("Camera")) { System.out.println("\nKey : " + k
+	 * + "\nName : " + objects.getString(k) + ", \nValue : " +
+	 * objects.getInt("Value")); } } } }
+	 */
 
 	/*
 	 * public Products[] displayingObjects(Products [] products, String labelType) {
@@ -56,15 +62,6 @@ public class ProductServiceImpl implements ProductService {
 	 * p.setNowPrice(getDiscount(wasPrice, p.getPrice().getNow())); }
 	 * 
 	 * productLists.add(p);
-	 * 
-	 * //checking if colorSwatches is not empty if (p.getColorSwatches() != null) {
-	 * 
-	 * displayingColorSwatches(p.getColorSwatches());
-	 * 
-	 * }
-	 * 
-	 * 
-	 * }
 	 * 
 	 * Collections.sort(productLists, Collections.reverseOrder()); Products []
 	 * productArray = productsList.toArray(new Products[productsList.size()]);
@@ -87,14 +84,6 @@ public class ProductServiceImpl implements ProductService {
 	 * .getBasicColor())));
 	 * 
 	 * } }
-	 */
-
-	/*
-	 * public String formatPrice(String currentPrice) { String num = ""; if
-	 * (Double.parseDouble(currentPrice) < 10 ) { num =
-	 * Double.parseDouble(currentPrice); } return currentPrice;
-	 * 
-	 * }
 	 */
 
 }

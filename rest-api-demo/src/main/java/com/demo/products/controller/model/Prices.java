@@ -1,9 +1,12 @@
 package com.demo.products.controller.model;
 
+import java.text.DecimalFormat;
+
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@Component
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Prices {
 	
@@ -11,6 +14,14 @@ public class Prices {
 	private String then1;
 	private String then2;
 	private String now;
+	private String currency;
+	
+	public String getCurrency() {
+		return currency;
+	}
+	public void setCurrency(String currency) {
+		this.currency = currency;
+	}
 	public String getWas() {
 		return was;
 	}
@@ -29,19 +40,36 @@ public class Prices {
 	public void setThen2(String then2) {
 		this.then2 = then2;
 	}
+	
 	public String getNow() {
 		return now;
 	}
 	public void setNow(Object now) {
-		if(now instanceof String)
+		if(now instanceof String) {
 			this.now = now.toString();
-		else 
+			//formatPrice(this.now);
+		}else 
 			now = "";
 	}
-
 	
-
+	public String formatPrice (Object now) {
+		String price = "";
+		if(now instanceof String) {
+			  if ((Double.parseDouble(this.now.toString())) < 10.00) {
+				price =new DecimalFormat("#.##").format(this.now.toString());
+			  } else {
+				price = new DecimalFormat("##").format(this.now.toString());
+			  }
+		 } else 
+			 now = "";
+			 
+		return this.getCurrency() + price;
+	}
+	@Override
+	public String toString() {
+		return "Prices [was=" + was + ", then1=" + then1 + ", then2=" + then2 + ", now=" + now + ", currency="
+				+ currency + "]";
+	} 
 	
 	
-
 }
