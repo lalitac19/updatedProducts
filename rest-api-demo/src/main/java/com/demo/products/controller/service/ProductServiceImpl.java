@@ -1,5 +1,10 @@
 package com.demo.products.controller.service;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -13,6 +18,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Value("${url}")
 	private String url;
+	
 
 	public ProductsList getProducts(String labelType) {
 		RestTemplate restTemplate = new RestTemplate();
@@ -21,15 +27,59 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	private ProductsList getDiscountedProducts(Product[] myProducts, String labelType) {
-		// discountPercentage;
-		for (Product products : myProducts) {
-			getDiscountPercentage(products.getPrice());
-			if(!products.getPrice().getWas().equals("")) {
-				
+		List<Product> productsList = new LinkedList<>();
+		for (Product product : myProducts) {
+			
+			System.out.println(product.getPrice());
+			int discountPercentage = getDiscountPercentage(product.getPrice());
+			if (discountPercentage == 0) {
+				continue;
 			}
-
+			product.setNowPrice(product.getPrice().formatPrice(product.getPrice().getNow()));
+			product.setPriceLabel(calculatePriceLabel(product.getPrice(), labelType == null? "ShowWasNow": labelType ));
+			product.compareTo(product);
+			productsList.add(product);
 		}
-		return null;
+		productsList.sort(Collections.reverseOrder());
+
+		ProductsList result = new ProductsList();
+		result.setProducts(productsList.toArray(new Product[productsList.size()]));
+		return result;
+	}
+
+	public String calculatePriceLabel(Prices price, String labelType) {
+		String statement = "";
+		switch (labelType) {
+		case "ShowWasThenNow": 
+			statement = calculateNowPrice(price);
+			break;
+		case "ShowPercDscount":
+			statement= getDiscountPercentage(price) + "% off - " + price.formatPrice(price.getNow());
+			break;
+		default: 
+			statement = displayWasNowPrice(price);
+		}
+		return statement;
+	}
+
+	public String displayWasNowPrice(Prices price) {
+		return "Was: " + price.formatPrice(price.getWas()) + ", Now: " + price.formatPrice(price.getNow());
+	}
+
+	public String calculateNowPrice(Prices price) {
+		String statement = "";
+		if (!price.getThen2().equals("")) {
+			statement = "Was: " + price.formatPrice(price.getWas()) 
+			+ ", then " + price.formatPrice(price.getThen2())
+			+ ", now: " + price.formatPrice(price.getNow());
+		} else if(!price.getThen1().equals("")) {
+			statement = "Was: " + price.formatPrice(price.getWas()) 
+			+ ", then " + price.formatPrice(price.getThen1())
+			+ ", now: " + price.formatPrice(price.getNow());
+		} else {
+		statement = displayWasNowPrice(price);
+		}
+		return statement;
 	}
 
 	public int getDiscountPercentage(Prices prices) {
@@ -41,49 +91,4 @@ public class ProductServiceImpl implements ProductService {
 		}
 		return discount;
 	}
-
-	// productsList.setProducts(products);
-	/*
-	 * for (int i = 0; i < myProducts.getProducts().length; i++) { JSONObject
-	 * objects = myProducts.getJSONObject(i); Iterator key = objects.keys(); while
-	 * (key.hasNext()) { String k = key.next().toString(); if(k.equals("Name")) {
-	 * if(objects.getString(k).equals("Camera")) { System.out.println("\nKey : " + k
-	 * + "\nName : " + objects.getString(k) + ", \nValue : " +
-	 * objects.getInt("Value")); } } } }
-	 */
-
-	/*
-	 * public Products[] displayingObjects(Products [] products, String labelType) {
-	 * List<Products> productLists = new ArrayList <Products>();
-	 * 
-	 * for (Products p: productLists) { String wasPrice = p.getPrice().getWas();
-	 * 
-	 * //checking if products has been discounted if (wasPrice != null) {
-	 * p.setNowPrice(getDiscount(wasPrice, p.getPrice().getNow())); }
-	 * 
-	 * productLists.add(p);
-	 * 
-	 * Collections.sort(productLists, Collections.reverseOrder()); Products []
-	 * productArray = productsList.toArray(new Products[productsList.size()]);
-	 * return productArray;
-	 * 
-	 * 
-	 * }
-	 */
-
-	/*
-	 * public String getDiscount(String priceWas, String priceNow) { discounted =
-	 * System.out.print(d); return null; }
-	 */
-	/*
-	 * public void displayingColorSwatches(ColorSwatch [] colorSwatch) {
-	 * //colorswatches for (ColorSwatch cs : colorSwatch) {
-	 * 
-	 * cs.setBasicColor((productUtils.getRGB(colorSwatches
-	 * 
-	 * .getBasicColor())));
-	 * 
-	 * } }
-	 */
-
 }

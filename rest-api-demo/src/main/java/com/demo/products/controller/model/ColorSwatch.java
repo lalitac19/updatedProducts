@@ -39,20 +39,16 @@ public class ColorSwatch {
 				+ getSkuId() + "]";
 	}
 
-	public int hashCode(String code) { // java String#hashCode
-	    int hash = 0;
-	    for (int i = 0; i < code.length(); i++) {
-	       hash = code.charAt(i) + ((hash << 5) - hash);
+	 public  String colorToHex(String code) { // java String#hashCode
+	        int hash = 0;
+	        for (int i = 0; i < code.length(); i++) {
+	            hash = code.charAt(i) + ((hash << 5) - hash);
+	        }
+	        return 
+	                Integer.toHexString(((hash >>16)&0xFF))+
+	                Integer.toHexString(((hash>>8)&0xFF))+
+	                Integer.toHexString(((hash>>0)&0xFF));
 	    }
-	    return hash;
-	} 
-
-	public static String intToARGB(int i){
-	    return Integer.toHexString(((i>>24)&0xFF))+
-	        Integer.toHexString(((i>>16)&0xFF))+
-	        Integer.toHexString(((i>>8)&0xFF))+
-	        Integer.toHexString((i&0xFF));
-	}
 	
 	
 	

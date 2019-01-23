@@ -49,21 +49,20 @@ public class Prices {
 			this.now = now.toString();
 			//formatPrice(this.now);
 		}else 
-			now = "";
+			this.now = "";
 	}
 	
-	public String formatPrice (Object now) {
+	public String formatPrice (String now) {
+		System.out.println("now = "+now);
 		String price = "";
-		if(now instanceof String) {
-			  if ((Double.parseDouble(this.now.toString())) < 10.00) {
-				price =new DecimalFormat("#.##").format(this.now.toString());
+		float nowFloat = Float.valueOf(now);
+		if (nowFloat < 10.00) {
+				price = new DecimalFormat("#.##").format(nowFloat);
 			  } else {
-				price = new DecimalFormat("##").format(this.now.toString());
+				price = Integer.toString(Math.round(nowFloat));
 			  }
-		 } else 
-			 now = "";
-			 
-		return this.getCurrency() + price;
+ 
+		return "£"+ price;
 	}
 	@Override
 	public String toString() {
