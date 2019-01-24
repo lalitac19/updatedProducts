@@ -1,11 +1,10 @@
 package com.demo.products.controller.service;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -36,8 +35,9 @@ public class ProductServiceImpl implements ProductService {
 				continue;
 			}
 			product.setNowPrice(product.getPrice().formatPrice(product.getPrice().getNow()));
-			product.setPriceLabel(calculatePriceLabel(product.getPrice(), labelType == null? "ShowWasNow": labelType ));
-			if(!product.getColorSwatches().toString().isEmpty()) {
+			product.setPriceLabel(calculatePriceLabel(product.getPrice()));
+			product.setPriceLabel(calculatingLabelType(product.getPrice(), labelType == null? "ShowWasNow": labelType));
+			if(!Arrays.toString(product.getColorSwatches()).isEmpty()) {
 				setHexColor(product.getColorSwatches());
 			}
 			product.compareTo(product);
@@ -56,11 +56,11 @@ public class ProductServiceImpl implements ProductService {
 		}
 	}
 
-	public String calculatePriceLabel(Prices price, String labelType) {
+	public String calculatingLabelType(Prices price, String labelType) {
 		String statement = "";
 		switch (labelType) {
 		case "ShowWasThenNow": 
-			statement = calculateNowPrice(price);
+			statement = calculatePriceLabel(price);
 			break;
 		case "ShowPercDscount":
 			statement= getDiscountPercentage(price) + "% off - " + price.formatPrice(price.getNow());
@@ -75,7 +75,7 @@ public class ProductServiceImpl implements ProductService {
 		return "Was: " + price.formatPrice(price.getWas()) + ", Now: " + price.formatPrice(price.getNow());
 	}
 
-	public String calculateNowPrice(Prices price) {
+	public String calculatePriceLabel(Prices price) {
 		String statement = "";
 		if (!price.getThen2().equals("")) {
 			statement = "Was: " + price.formatPrice(price.getWas()) 

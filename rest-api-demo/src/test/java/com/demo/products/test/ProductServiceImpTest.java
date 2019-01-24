@@ -63,11 +63,11 @@ public class ProductServiceImpTest {
 	@Test
 	  public void calculateNowPriceTest() {
 		  String message = "Was: £20, then £12, now: £10";
-		  String displayed2 = productServiceImpl.calculateNowPrice(price3);
+		  String displayed2 = productServiceImpl.calculatePriceLabel(price3);
 		  String message1 = "Was: £700, then £550, now: £450";
-		  String displayed1 = productServiceImpl.calculateNowPrice(price4);
+		  String displayed1 = productServiceImpl.calculatePriceLabel(price4);
 		  String message3 = "Was: £45, Now: £20";
-		  String displayed3 = productServiceImpl.calculateNowPrice(price2);
+		  String displayed3 = productServiceImpl.calculatePriceLabel(price2);
 		 Assert.assertEquals(message, displayed2);
 		 Assert.assertEquals(message1, displayed1);
 		 Assert.assertEquals(message3, displayed3);
