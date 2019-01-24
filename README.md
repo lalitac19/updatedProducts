@@ -29,7 +29,7 @@ In order to run the tests, you will need to run them separately. To do this, in 
 
 # Testing 
 Unit Testing - Using JUnit
-Unit testing involves breaking the program down into very small pieces that we can test. More about unit testing here
+
 
 # Please note: 
 In order to run the tests, you will need to run them separately. To do this, in your IDE, select 'Run as JUnit Tests'.
